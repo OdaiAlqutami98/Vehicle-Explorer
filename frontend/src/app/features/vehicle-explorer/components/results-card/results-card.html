@@ -1,0 +1,88 @@
+<section class="panel results">
+  <div class="results-header">
+    <div>
+      <h2 aria-live="polite">
+        @if (nameFilter().trim() !== '') {
+          {{ visibleModels().length }} of {{ models().length }} models
+        } @else {
+          {{ models().length }} {{ models().length === 1 ? 'model' : 'models' }}
+        }
+      </h2>
+      <p class="summary">{{ summary() }}</p>
+    </div>
+
+    @if (models().length > 0) {
+      <p-iconfield class="name-filter">
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="search"
+          placeholder="Filter by model name"
+          aria-label="Filter by model name"
+          [(ngModel)]="nameFilter"
+        />
+      </p-iconfield>
+    }
+  </div>
+
+  @if (models().length === 0) {
+    <div class="empty">
+      <p-message severity="info" text="No models found for this make and year." />
+      @if (search().vehicleType !== null) {
+        <p-button
+          label="Clear vehicle type filter"
+          severity="secondary"
+          (onClick)="clearVehicleType.emit()"
+        />
+      }
+    </div>
+  } @else {
+    <p-table
+      [value]="visibleModels()"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [pageLinks]="3"
+      [alwaysShowPaginator]="false"
+      [(first)]="firstRow"
+    >
+      <ng-template #header>
+        <tr>
+          <th [class.half-width]="!showVehicleType()" pSortableColumn="id">
+            Model ID <p-sortIcon field="id" />
+          </th>
+          <th pSortableColumn="name">Model <p-sortIcon field="name" /></th>
+          @if (showVehicleType()) {
+            <th pSortableColumn="vehicleTypeName">
+              Vehicle type <p-sortIcon field="vehicleTypeName" />
+            </th>
+          }
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-model>
+        <tr>
+          <td class="model-id">{{ model.id }}</td>
+          <td class="model-name">{{ model.name }}</td>
+          @if (showVehicleType()) {
+            <td>
+              @if (model.vehicleTypeName) {
+                <p-tag [value]="model.vehicleTypeName" severity="warn" [rounded]="true" />
+              } @else {
+                <span class="no-type">—</span>
+              }
+            </td>
+          }
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td [attr.colspan]="showVehicleType() ? 3 : 2" class="no-match">
+            No models match "{{ nameFilter().trim() }}".
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</section>

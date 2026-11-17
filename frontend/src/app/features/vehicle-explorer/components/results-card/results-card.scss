@@ -1,0 +1,84 @@
+.results-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+}
+
+.summary {
+  margin: 0.25rem 0 0;
+  color: var(--p-surface-500);
+}
+
+.name-filter {
+  flex: 0 1 16rem;
+
+  input {
+    width: 100%;
+  }
+}
+
+.empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+
+  p-message {
+    flex: 1 1 16rem;
+  }
+}
+
+.results {
+  overflow: hidden;
+
+  th {
+    padding: 0.875rem 1.5rem;
+    background: var(--p-surface-50);
+    color: var(--p-surface-500);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.75rem 1.5rem;
+  }
+
+  // Less padding on phones so every column fits.
+  @media (max-width: 40rem) {
+    th,
+    td {
+      padding-inline: 0.75rem;
+    }
+  }
+
+  // With only ID and Model shown (no vehicle type), the two columns split the width evenly.
+  .half-width {
+    width: 50%;
+  }
+
+  .model-name {
+    font-weight: 600;
+  }
+
+  td.model-id {
+    color: var(--p-surface-500);
+    font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  }
+
+  .no-type,
+  .no-match {
+    color: var(--p-surface-400);
+  }
+}

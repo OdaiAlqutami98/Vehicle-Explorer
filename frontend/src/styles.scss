@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  background: var(--p-surface-50);
+  color: var(--p-surface-900);
+}
+
+// The white rounded box used by the filters, the results, the skeleton and the error message.
+.panel {
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 1rem;
+}
+
+// The make suggestion list. PrimeNG gives the panel a min-width equal to the input and keeps every option on one line,
+// so one long company name made the whole panel wider than the input. width: 0 lets the inline min-width decide the
+// width (exactly the input's), and long names wrap instead. The panel is rendered outside the component, so this rule is global.
+.make-suggestions {
+  width: 0;
+
+  .p-autocomplete-option {
+    white-space: normal;
+  }
+}

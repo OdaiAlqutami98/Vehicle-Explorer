@@ -1,0 +1,71 @@
+<section class="panel filters">
+  <!-- The makes list is large, so the first load can take a few seconds. -->
+  @if (makesStatus() === 'loading') {
+    <p-progressbar class="makes-loading" mode="indeterminate" aria-label="Loading makes" />
+  }
+
+  <div class="field">
+    <label for="make">Make</label>
+    <p-iconfield>
+      <p-inputicon
+        [class]="makesStatus() === 'loading' ? 'pi pi-spin pi-spinner' : 'pi pi-search'"
+      />
+      <p-autocomplete
+        inputId="make"
+        optionLabel="name"
+        dataKey="id"
+        size="large"
+        [placeholder]="makePlaceholder()"
+        [disabled]="makesStatus() !== 'loaded'"
+        [suggestions]="makeSuggestions()"
+        panelStyleClass="make-suggestions"
+        [forceSelection]="true"
+        [fluid]="true"
+        [ngModel]="makeInputValue()"
+        (ngModelChange)="onMakeInputChange($event)"
+        (completeMethod)="searchMakes($event)"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="field">
+    <label for="year">Model year</label>
+    <p-select
+      inputId="year"
+      placeholder="Select a year"
+      size="large"
+      [options]="years()"
+      [fluid]="true"
+      [ngModel]="selectedYear()"
+      (ngModelChange)="yearChange.emit($event)"
+    />
+  </div>
+
+  <div class="field">
+    <label for="vehicle-type">Vehicle type <span class="optional">(optional)</span></label>
+    <p-select
+      inputId="vehicle-type"
+      optionLabel="name"
+      optionValue="name"
+      size="large"
+      [placeholder]="vehicleTypePlaceholder()"
+      [options]="vehicleTypes()"
+      [loading]="vehicleTypesStatus() === 'loading'"
+      [showClear]="true"
+      [disabled]="vehicleTypesStatus() !== 'loaded'"
+      [fluid]="true"
+      [ngModel]="selectedVehicleType()"
+      (ngModelChange)="vehicleTypeChange.emit($event)"
+    />
+  </div>
+
+  <p-button
+    class="show-models"
+    label="Show models"
+    icon="pi pi-search"
+    size="large"
+    [disabled]="!canShowModels()"
+    [fluid]="true"
+    (onClick)="showModels.emit()"
+  />
+</section>

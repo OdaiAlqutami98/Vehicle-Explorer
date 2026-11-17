@@ -1,0 +1,44 @@
+<div class="intro">
+  <h1>Find vehicle models</h1>
+  <p>Pick a make and a model year. Narrow the list by vehicle type if you want.</p>
+</div>
+
+@if (makes().status === 'error') {
+  <app-load-error
+    [message]="'Could not load the list of makes. ' + makes().errorMessage"
+    (retry)="loadMakes()"
+  />
+}
+
+<app-filter-card
+  [makes]="makes().options"
+  [makesStatus]="makes().status"
+  [vehicleTypes]="vehicleTypes().options"
+  [vehicleTypesStatus]="vehicleTypes().status"
+  [years]="years"
+  [selectedMake]="selectedMake()"
+  [selectedYear]="selectedYear()"
+  [selectedVehicleType]="selectedVehicleType()"
+  (makeChange)="onMakeChange($event)"
+  (yearChange)="selectedYear.set($event)"
+  (vehicleTypeChange)="selectedVehicleType.set($event)"
+  (showModels)="showModels()"
+/>
+
+@let state = results();
+
+@switch (state.status) {
+  @case ('loading') {
+    <app-results-skeleton />
+  }
+  @case ('error') {
+    <app-load-error [message]="state.message" (retry)="searchAgain(state.search)" />
+  }
+  @case ('loaded') {
+    <app-results-card
+      [search]="state.search"
+      [models]="state.models"
+      (clearVehicleType)="clearVehicleTypeAndSearch()"
+    />
+  }
+}
