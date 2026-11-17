@@ -1,0 +1,8 @@
+name: vehicle-explorer
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"   # host port : container port
+    restart: unless-stopped
