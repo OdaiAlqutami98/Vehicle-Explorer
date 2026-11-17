@@ -1,0 +1,28 @@
+# Requests to try the API from Visual Studio, Rider or the VS Code REST Client extension.
+# Start the API first: dotnet run --project backend/VehicleExplorer.Api
+
+@baseUrl = http://localhost:5080
+
+### Health check
+GET {{baseUrl}}/health
+
+### All makes (over 12,000, sorted by name)
+GET {{baseUrl}}/api/makes/GetMakes
+
+### Vehicle types for HONDA (make id 474)
+GET {{baseUrl}}/api/makes/GetVehicleTypes?makeId=474
+
+### Models for HONDA in 2015, filtered to Passenger Car (vehicleType is optional)
+GET {{baseUrl}}/api/makes/GetModels?makeId=474&year=2015&vehicleType=Passenger%20Car
+
+### Empty vehicleType is treated as "all types"
+GET {{baseUrl}}/api/makes/GetModels?makeId=474&year=2015&vehicleType=
+
+### Invalid year returns 400 ProblemDetails
+GET {{baseUrl}}/api/makes/GetModels?makeId=474&year=1980
+
+### Missing makeId returns 400 ProblemDetails
+GET {{baseUrl}}/api/makes/GetVehicleTypes
+
+### Unknown API URL returns 404, not index.html
+GET {{baseUrl}}/api/unknown

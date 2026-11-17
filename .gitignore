@@ -1,0 +1,27 @@
+# .NET build output
+bin/
+obj/
+*.user
+.vs/
+TestResults/
+
+# The Angular build is copied into the API's wwwroot when it is hosted by the API
+backend/VehicleExplorer.Api/wwwroot/
+
+# Node and Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local secrets and environment overrides
+.env
+*.env
+appsettings.*.local.json
+
